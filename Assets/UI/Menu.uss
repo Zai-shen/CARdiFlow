@@ -1,0 +1,104 @@
+.menu {
+    flex-grow: 1;
+}
+
+.menu-button {
+    width: 100%;
+    height: auto;
+    font-size: 30px;
+    -unity-text-align: middle-center;
+    color: rgb(202, 202, 202);
+    background-color: rgb(67, 67, 67);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.menu-button:hover {
+    border-left-color: rgb(204, 102, 0);
+    border-right-color: rgb(204, 102, 0);
+    border-top-color: rgb(204, 102, 0);
+    border-bottom-color: rgb(204, 102, 0);
+    color: rgb(204, 102, 0);
+}
+
+.header {
+    -unity-text-align: middle-center;
+    justify-content: center;
+    align-items: center;
+    font-size: 96px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    color: rgb(204, 102, 0);
+    margin-top: 12px;
+    margin-right: 0;
+    margin-bottom: 12px;
+    margin-left: 0;
+    width: 100%;
+    -unity-font-style: bold;
+}
+
+.menu-slider {
+    width: 100%;
+    height: auto;
+    font-size: 30px;
+    -unity-text-align: middle-center;
+    color: rgb(202, 202, 202);
+    background-color: rgb(67, 67, 67);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.menu-toggle {
+    width: 100%;
+    height: auto;
+    font-size: 30px;
+    -unity-text-align: middle-center;
+    color: rgb(202, 202, 202);
+    background-color: rgb(67, 67, 67);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 0;
+    margin-right: 0;
+}

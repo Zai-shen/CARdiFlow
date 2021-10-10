@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="TitleScreenDisplay" src="TitleScreenDisplay.uxml" />
+    <ui:Template name="OptionsDisplay" src="OptionsDisplay.uxml" />
+    <Style src="Menu.uss" />
+    <TitleScreenManager class="menu">
+        <ui:Instance template="TitleScreenDisplay" name="TitleScreenDisplay" class="menu" />
+        <ui:Instance template="OptionsDisplay" name="OptionsDisplay" class="menu" style="display: none;" />
+    </TitleScreenManager>
+</ui:UXML>
