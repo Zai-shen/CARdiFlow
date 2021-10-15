@@ -14,7 +14,7 @@ public class SceneLoadProgress : MonoBehaviour
 
     private void Start()
     {
-        //Grab a reference to the root element that is drawn
+        //Grab a reference to the root element that is being drawn
         root = GetComponent<UIDocument>().rootVisualElement;
         startButton = root.Q<Button>("start-button");
 
@@ -41,7 +41,7 @@ public class SceneLoadProgress : MonoBehaviour
     {
         isLoading = true;
         yield return null;
-        Debug.Log("Loading!");
+
         //Tell vuforia to init
         VuforiaRuntime.Instance.InitVuforia();
 

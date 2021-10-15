@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,6 +8,7 @@ public class TitleScreenManager : VisualElement
     VisualElement m_OptionsScreen;
     Button m_OptionsButton;
     Button m_OptionsBackButton;
+    Button m_OptionsApplyButton;
     Button m_ExitButton;
 
     public static string m_SceneName = "CARdiFlow";
@@ -36,20 +35,32 @@ public class TitleScreenManager : VisualElement
 
     void OnGeometryChange(GeometryChangedEvent evt)
     {
-        m_TitleScreen = this.Q("TitleScreenDisplay");
-        m_OptionsScreen = this.Q("OptionsDisplay");
-        
-        m_OptionsButton = m_TitleScreen?.Q<Button>("options-button");
-        m_OptionsButton.RegisterCallback<ClickEvent>(ev => EnableOptionsScreen());
-        m_OptionsButton.clickable.clicked += EnableOptionsScreen;
+#if UNITY_EDITOR
+        if (Application.isPlaying)
+        {
+#endif
+            m_TitleScreen = this.Q("TitleScreenDisplay");
+            m_OptionsScreen = this.Q("OptionsDisplay");
 
-        m_OptionsBackButton = m_OptionsScreen.Q<Button>("back-button");
-        m_OptionsBackButton.RegisterCallback<ClickEvent>(ev => EnableTitleScreen());
-        m_OptionsBackButton.clickable.clicked += EnableTitleScreen;
+            m_OptionsButton = m_TitleScreen?.Q<Button>("options-button");
+            m_OptionsButton.RegisterCallback<ClickEvent>(ev => EnableOptionsScreen());
+            m_OptionsButton.clickable.clicked += EnableOptionsScreen;
 
-        m_ExitButton = this.Q<Button>("exit-button");
-        m_ExitButton.RegisterCallback<ClickEvent>(ev => ExitApplication());
-        m_ExitButton.clickable.clicked += ExitApplication;
+            m_OptionsBackButton = m_OptionsScreen.Q<Button>("back-button");
+            m_OptionsBackButton.RegisterCallback<ClickEvent>(ev => EnableTitleScreen());
+            m_OptionsBackButton.clickable.clicked += EnableTitleScreen;
+
+            m_OptionsApplyButton = m_OptionsScreen.Q<Button>("apply-button");
+            m_OptionsApplyButton.RegisterCallback<ClickEvent>(ev => { Globals.SETTINGS.Apply(); EnableTitleScreen(); });
+            m_OptionsApplyButton.clickable.clicked += () => { Globals.SETTINGS.Apply(); EnableTitleScreen(); };
+
+            m_ExitButton = this.Q<Button>("exit-button");
+            m_ExitButton.RegisterCallback<ClickEvent>(ev => ExitApplication());
+            m_ExitButton.clickable.clicked += ExitApplication;
+
+#if UNITY_EDITOR
+        }
+#endif
 
         this.UnregisterCallback<GeometryChangedEvent>(OnGeometryChange);
     }

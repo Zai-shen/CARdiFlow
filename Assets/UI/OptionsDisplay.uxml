@@ -2,14 +2,26 @@
     <Style src="Menu.uss" />
     <ui:VisualElement name="screen" class="menu" style="flex-grow: 1; flex-direction: row;">
         <ui:VisualElement name="left-space" style="width: 30%;" />
-        <ui:VisualElement name="title-screen" style="width: 40%; height: auto; opacity: 1; justify-content: center; align-items: center; flex-grow: 1; min-width: 800px; flex-shrink: 0;">
+        <OptionsDisplay class="mid-screen">
             <ui:Label text="Options" display-tooltip-when-elided="true" name="title" class="header" />
-            <ui:VisualElement name="menu-box" style="width: 100%; height: 25%; justify-content: flex-start; align-items: center;">
-                <ui:Toggle label="Toggle" class="menu-toggle" />
-                <ui:Slider picking-mode="Ignore" label="SlidingSlider" value="42" high-value="100" class="menu-slider" />
-                <ui:Button text="BACK" display-tooltip-when-elided="true" name="back-button" class="menu-button" />
+            <ui:VisualElement name="menu-box" style="width: 100%; height: auto; justify-content: flex-start; align-items: center;">
+                <uie:EnumField label="Screen Resolution" name="test-enumfield" include-obsolete-values="false" class="menu-dropdown" style="background-color: rgb(67, 67, 67); display: none;" />
+                <ui:Slider picking-mode="Ignore" label="SlidingSlider" value="42" high-value="100" name="Slider" class="menu-slider" style="display: none;" />
+                <ui:VisualElement name="screen-toggle-box" class="button-split-box">
+                    <ui:Toggle label="Full Screen" name="fullscreen-toggle" class="menu-toggle" style="display: flex;" />
+                    <ui:Toggle label="VSync" name="vsync-toggle" class="menu-toggle" style="display: flex;" />
+                </ui:VisualElement>
+                <ui:DropdownField label="Screen Resolution" index="1" choices="a, b, c" name="screen-resolution-dd" class="menu-dropdown green-text" />
+                <ui:DropdownField label="Anisotropic Filtering" index="1" choices="a, b, c" name="aniso-filter-dd" class="menu-dropdown" />
+                <ui:DropdownField label="Anti Aliasing" index="1" choices="a, b, c" name="anti-aliasing-dd" class="menu-dropdown" />
+                <ui:DropdownField label="Texture Quality" index="1" choices="a, b, c" name="texture-quality-dd" class="menu-dropdown" />
+                <ui:DropdownField label="Shadow Quality" index="1" choices="a, b, c" name="shadow-quality-dd" class="menu-dropdown" />
+                <ui:VisualElement name="option-nav-box" class="button-split-box">
+                    <ui:Button text="BACK" display-tooltip-when-elided="true" name="back-button" class="menu-button" />
+                    <ui:Button text="APPLY" display-tooltip-when-elided="true" name="apply-button" class="menu-button" />
+                </ui:VisualElement>
             </ui:VisualElement>
-        </ui:VisualElement>
+        </OptionsDisplay>
         <ui:VisualElement name="right-space" style="width: 30%;" />
     </ui:VisualElement>
 </ui:UXML>

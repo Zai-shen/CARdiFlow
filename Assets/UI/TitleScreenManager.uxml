@@ -3,7 +3,7 @@
     <ui:Template name="OptionsDisplay" src="OptionsDisplay.uxml" />
     <Style src="Menu.uss" />
     <TitleScreenManager class="menu">
-        <ui:Instance template="TitleScreenDisplay" name="TitleScreenDisplay" class="menu" />
+        <ui:Instance template="TitleScreenDisplay" name="TitleScreenDisplay" class="menu" style="display: flex;" />
         <ui:Instance template="OptionsDisplay" name="OptionsDisplay" class="menu" style="display: none;" />
     </TitleScreenManager>
 </ui:UXML>
