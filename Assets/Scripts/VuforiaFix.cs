@@ -7,6 +7,7 @@ public class VuforiaFix : MonoBehaviour
 {
     private void Awake()
     {
+        Debug.Log("COMMAND: Fixing vuforia.");
         // https://forum.unity.com/threads/use-ar-camera-vuforia-core-in-individual-scene-not-entire-project.498489/
         try
         {

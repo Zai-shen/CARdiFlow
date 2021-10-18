@@ -8,7 +8,11 @@ using UnityEngine;
 /// <author> Miran https://github.com/Zai-shen Jank </author>
 public class FlowController : MonoBehaviour
 {
-    private List<GameObject> flows;
+    private static FlowController _instance;
+    public static FlowController Instance { get { return _instance; } private set { } }
+
+    private GameObject[] flows;
+    private List<GameObject> enabledFlows;
 
     private float duration = 2f;
     private float durationTimer = 0f;
@@ -17,16 +21,39 @@ public class FlowController : MonoBehaviour
     private int current = 0;
     private bool forward = true;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        flows = new List<GameObject>();
-        foreach (Transform child in transform)
-        {
-            flows.Add(child.gameObject);
-        }
+    public bool isTracked { get; set; }
 
-        EnableOnly(0);
+    // Start is called before the first frame update
+    private void Awake()
+    {
+        Init();
+        InitFlows();
+
+        EnableOnly(0);//Replace with start 0
+    }
+
+    private void Init()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+
+            _instance = this;
+        }
+    }
+
+    private void InitFlows()
+    {
+        enabledFlows = new List<GameObject>();
+        flows = new GameObject[transform.childCount];
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            flows[i] = transform.GetChild(i).gameObject;
+        }
     }
 
     /// <summary>
@@ -36,19 +63,11 @@ public class FlowController : MonoBehaviour
     /// <param name="flowNr"> Index of flow to animate in <see cref="flows"/> list. </param>
     private void EnableOnly(int flowNr)
     {
-        for (int i = 0; i < flows.Count; i++)
-        {
-            GameObject currFlow = flows[i];
-            if (i != flowNr)
-            {
-                currFlow.SetActive(false);
-            }
-            else
-            {
-                currFlow.SetActive(true);
-                Play(currFlow);
-            }
-        }
+        DisableAll();
+
+        GameObject currFlow = flows[flowNr];
+        currFlow.SetActive(true);
+        Play(currFlow);
     }
 
     /// <summary>
@@ -81,6 +100,7 @@ public class FlowController : MonoBehaviour
     {
         foreach (GameObject flow in flows)
         {
+            flow.GetComponentInChildren<AnimateVAT>().StopAnimation();
             flow.SetActive(false);
         }
     }
@@ -88,23 +108,30 @@ public class FlowController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        durationTimer += Time.deltaTime;
+        if (!isTracked)
+        {
+            return;
+        }
 
+        durationTimer += Time.deltaTime;
         if (durationTimer >= duration)
         {
             durationTimer = 0f;
 
+            HandleFlowing();
+        }
+    }
 
-            if (overrideCurrent != -1)
-            {
-                EnableOnly(overrideCurrent);
-                forward = !forward;
-                return;
-            }
-
-            PingPongFlows();
+    private void HandleFlowing()
+    {
+        if (overrideCurrent != -1)
+        {
+            EnableOnly(overrideCurrent);
+            forward = !forward;
+            return;
         }
 
+        PingPongFlows();
     }
 
     /// <summary>
@@ -123,7 +150,7 @@ public class FlowController : MonoBehaviour
 
         EnableOnly(current);
 
-        if (current == flows.Count - 1 && forward)
+        if (current == flows.Length - 1 && forward)
         {
             forward = !forward;
             current++;

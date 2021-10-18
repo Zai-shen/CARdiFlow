@@ -21,7 +21,7 @@ public class OptionsDisplay : VisualElement
     {
 #if UNITY_EDITOR
         if (Application.isPlaying)
-        {
+        { 
 #endif
 
             Toggle fullScreenToggle = m_OptionsScreen.Q<Toggle>("fullscreen-toggle");

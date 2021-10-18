@@ -9,6 +9,7 @@ using UnityEngine;
 public class AnimateVAT : MonoBehaviour
 {
     private Renderer rend;
+    private Coroutine vatAnimation;
 
     void Awake()
     {
@@ -20,7 +21,18 @@ public class AnimateVAT : MonoBehaviour
     /// </summary>
     public void PlayAnimation(float startValue, float endValue, float animationDuration)
     {
-        StartCoroutine(AnimateFor(startValue, endValue, animationDuration));
+        vatAnimation = StartCoroutine(AnimateFor(startValue, endValue, animationDuration));
+    }
+
+    /// <summary>
+    /// Stops the current animation coroutine.
+    /// </summary>
+    public void StopAnimation()
+    {
+        if (vatAnimation != null)
+        {
+            StopCoroutine(vatAnimation);
+        }
     }
 
     /// <summary>
