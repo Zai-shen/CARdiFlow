@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum FlowMode
+{
+    CONTINUOUS,
+    SIMULTANEOUS,
+    DUAL_CONTINUOUS
+}
+
 /// <summary>
 /// Handles flows and their de/activation.
 /// </summary>
@@ -11,8 +18,8 @@ public class FlowController : MonoBehaviour
     private static FlowController _instance;
     public static FlowController Instance { get { return _instance; } private set { } }
 
-    private GameObject[] flows;
-    private List<GameObject> enabledFlows;
+    private AnimateVAT[] flows;
+    private List<AnimateVAT> activeFlows;
 
     private float duration = 2f;
     private float durationTimer = 0f;
@@ -21,7 +28,9 @@ public class FlowController : MonoBehaviour
     private int current = 0;
     private bool forward = true;
 
-    public bool isTracked { get; set; }
+    public FlowMode flowMode = FlowMode.CONTINUOUS;
+
+    private bool isTracked;
 
     // Start is called before the first frame update
     private void Awake()
@@ -29,7 +38,7 @@ public class FlowController : MonoBehaviour
         Init();
         InitFlows();
 
-        EnableOnly(0);//Replace with start 0
+        DisableAll();
     }
 
     private void Init()
@@ -47,49 +56,103 @@ public class FlowController : MonoBehaviour
 
     private void InitFlows()
     {
-        enabledFlows = new List<GameObject>();
-        flows = new GameObject[transform.childCount];
+        activeFlows = new List<AnimateVAT>();
+        flows = new AnimateVAT[transform.childCount];
 
         for (int i = 0; i < transform.childCount; i++)
         {
-            flows[i] = transform.GetChild(i).gameObject;
+            flows[i] = transform.GetChild(i).GetComponentInChildren<AnimateVAT>();
         }
     }
 
-    /// <summary>
-    /// Enables the flow with index <paramref name="flowNr"/> and disables all others.
-    /// Then plays the animation for selected flow.
-    /// </summary>
-    /// <param name="flowNr"> Index of flow to animate in <see cref="flows"/> list. </param>
-    private void EnableOnly(int flowNr)
+    public void OnTargetChange(bool tracked)
     {
-        DisableAll();
+        isTracked = tracked;
 
-        GameObject currFlow = flows[flowNr];
-        currFlow.SetActive(true);
-        Play(currFlow);
-    }
-
-    /// <summary>
-    /// Searches for <see cref="AnimateVAT"/> component in children, then invokes the animation coroutine.
-    /// </summary>
-    /// <param name="currFlow"> Parent of the flow to animate. </param>
-    private void Play(GameObject currFlow)
-    {
-        AnimateVAT animator = currFlow.GetComponentInChildren<AnimateVAT>();
-        if (animator == null)
+        if (tracked)
         {
-            Debug.Log("No AnimateVAT script found for: " + currFlow.name);
+            foreach (AnimateVAT flow in activeFlows)
+            {
+                flow.waiting = false;
+            }
             return;
         }
 
-        if (forward)
+        foreach (AnimateVAT flow in activeFlows)
         {
-            animator.PlayAnimation(0f, 1f, 2f);
+            flow.waiting = true;
         }
-        else
+    }
+
+    /// <summary>
+    /// Disables all flows, then enables the flow with index <see cref="current"/>.
+    /// </summary>
+    private void EnableOnlyCurrent()
+    {
+        DisableAll();
+        activeFlows[current].gameObject.SetActive(true);
+    }
+
+    private void EnableOnlyActiveFlows()
+    {
+        DisableAll();
+        foreach (AnimateVAT flow in activeFlows)
         {
-            animator.PlayAnimation(1f, 0f, 2f);
+            flow.gameObject.SetActive(true);
+        }
+    }
+
+    public void SetOnlyFlowActive(int i)
+    {
+        DisableAll();
+        activeFlows.Clear();
+        SetFlowActive(i);
+        current = 0;
+    }
+
+    public void SetFlowActive(int i)
+    {
+        if (activeFlows.Contains(flows[i]))
+        {
+            return;
+        }
+        activeFlows.Add(flows[i]);
+    }
+
+    public void SetOnlyFlowsActive(int[] flowArray)
+    {
+        DisableAll();
+        activeFlows.Clear();
+        SetFlowsActive(flowArray);
+        current = 0;
+    }
+
+    public void SetFlowsActive(int[] flowArray)
+    {
+        for (int i = 0; i < flowArray.Length; i++)
+        {
+            if (activeFlows.Contains(flows[flowArray[i]]))
+            {
+                return;
+            }
+            activeFlows.Add(flows[flowArray[i]]);
+        }
+    }
+
+    private void PlaySimultaneous()
+    {
+        for (int i = 0; i < activeFlows.Count; i++)
+        {
+            activeFlows[i].PlayAnimation(0f, 1f, duration);
+        }
+    }
+
+    private void Play()
+    {
+        activeFlows[current++].PlayAnimation(0, 1f, duration);
+        if (current == activeFlows.Count)
+        {
+            current = 0;
         }
     }
 
@@ -98,10 +161,10 @@ public class FlowController : MonoBehaviour
     /// </summary>
     private void DisableAll()
     {
-        foreach (GameObject flow in flows)
+        foreach (AnimateVAT flow in flows)
         {
-            flow.GetComponentInChildren<AnimateVAT>().StopAnimation();
-            flow.SetActive(false);
+            flow.StopAnimation();
+            flow.gameObject.SetActive(false);
         }
     }
 
@@ -113,52 +176,66 @@ public class FlowController : MonoBehaviour
             return;
         }
 
+
         durationTimer += Time.deltaTime;
         if (durationTimer >= duration)
         {
             durationTimer = 0f;
 
+            if (activeFlows.Count == 0)
+            {
+                return;
+            }
             HandleFlowing();
         }
     }
 
     private void HandleFlowing()
     {
-        if (overrideCurrent != -1)
+        switch (flowMode)
         {
-            EnableOnly(overrideCurrent);
-            forward = !forward;
-            return;
+            case FlowMode.DUAL_CONTINUOUS:
+                //0&3
+                //1&4
+                //2&5
+                break;
+            case FlowMode.SIMULTANEOUS:
+                EnableOnlyActiveFlows();
+                PlaySimultaneous();
+                break;
+            case FlowMode.CONTINUOUS:
+            default:
+                EnableOnlyCurrent();
+                Play();
+                break;
         }
-
-        PingPongFlows();
     }
 
     /// <summary>
     /// In/Decrements the <paramref name="current"></paramref> value in alternating as/descending order. Repeats edge cases 2 times.
     /// </summary>
-    private void PingPongFlows()
-    {
-        if (forward)
-        {
-            current++;
-        }
-        else
-        {
-            current--;
-        }
+    //private void PingPongFlows()
+    //{
+    //    if (forward)
+    //    {
+    //        current++;
+    //    }
+    //    else
+    //    {
+    //        current--;
+    //    }
 
-        EnableOnly(current);
+    //    EnableOnly(current);
 
-        if (current == flows.Length - 1 && forward)
-        {
-            forward = !forward;
-            current++;
-        }
-        else if (current == 0 && !forward)
-        {
-            forward = !forward;
-            current--;
-        }
-    }
+    //    if (current == flows.Length - 1 && forward)
+    //    {
+    //        forward = !forward;
+    //        current++;
+    //    }
+    //    else if (current == 0 && !forward)
+    //    {
+    //        forward = !forward;
+    //        current--;
+    //    }
+    //}
 }

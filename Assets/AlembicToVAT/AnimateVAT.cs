@@ -10,6 +10,7 @@ public class AnimateVAT : MonoBehaviour
 {
     private Renderer rend;
     private Coroutine vatAnimation;
+    public bool waiting { get; set; }
 
     void Awake()
     {
@@ -38,7 +39,8 @@ public class AnimateVAT : MonoBehaviour
     /// <summary>
     /// Linearly interpolates from <paramref name="startValue"/> to <paramref name="endValue"/> 
     /// over the duration of <paramref name="animationDuration"/> and sets the 
-    /// renderer.material._Timeposition to the calculated value. This animates the Vertex Animation Texture. 
+    /// <see cref="rend"/>.material._Timeposition to the calculated value. Waits while <see cref="waiting"/> = true.
+    /// This animates the Vertex Animation Texture. 
     /// </summary>
     /// <param name="startValue"> Starting value for time [0..1]. </param>
     /// <param name="endValue"> End value for for time [1..0]. </param>
@@ -46,7 +48,7 @@ public class AnimateVAT : MonoBehaviour
     /// <returns> Coroutine. </returns>
     private IEnumerator AnimateFor(float startValue, float endValue, float animationDuration)
     {
-        Debug.Log("Animating: " + transform.name);
+        //Debug.Log("Animating: " + transform.name);
         float elapsedTime = 0f;
 
         while (elapsedTime < animationDuration)
@@ -54,7 +56,7 @@ public class AnimateVAT : MonoBehaviour
             float timeValue = Mathf.Lerp(startValue, endValue, (elapsedTime / animationDuration));
             rend.material.SetFloat("_Timeposition", timeValue);
             elapsedTime += Time.deltaTime;
-            yield return null;
+            yield return new WaitWhile(() => waiting == true);
         }
 
         rend.material.SetFloat("_Timeposition", endValue);
