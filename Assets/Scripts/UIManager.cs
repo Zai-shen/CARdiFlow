@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    private int[] leftHeart = new int[3] {3,4,5};
-    private int[] rightHeart = new int[3] {0,1,2};
-
     public void ActivateFlow(int i)
     {
         FlowController.Instance.SetFlowActive(i);
@@ -29,11 +26,22 @@ public class UIManager : MonoBehaviour
 
     public void ActivateLeft()
     {
-        ActivateOnlyFlows(leftHeart);
+        ActivateOnlyFlows(Globals.LEFT_HEART);
     }
 
     public void ActivateRight()
     {
-        ActivateOnlyFlows(rightHeart);
+        ActivateOnlyFlows(Globals.RIGHT_HEART);
+    }
+
+    public void SetColorMode(int i)
+    {
+        SetColorMode((ColorMode)i);
+    }
+
+    private void SetColorMode(ColorMode cMode)
+    {
+        ColorController.Instance.colorMode = cMode;
+        ColorController.Instance.SetColors();
     }
 }

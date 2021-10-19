@@ -17,6 +17,11 @@ public class AnimateVAT : MonoBehaviour
         rend = GetComponent<Renderer>();
     }
 
+    public void SetShaderColor(Color color)
+    {
+        rend.material.color = color;
+    }
+
     /// <summary>
     /// Exposes AnimateFor coroutine.
     /// </summary>

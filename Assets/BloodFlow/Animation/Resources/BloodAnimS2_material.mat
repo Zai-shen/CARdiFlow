@@ -34,5 +34,5 @@ Material:
     - _Timeposition: 1
     - __dirty: 1
     m_Colors:
-    - _Color: {r: 0.092089795, g: 0.09122462, b: 0.7735849, a: 0.7882353}
+    - _Color: {r: 0.092089795, g: 0.09122462, b: 0.7735849, a: 0.7529412}
   m_BuildTextureStacks: []

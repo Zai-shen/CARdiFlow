@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum FlowMode
 {
-    CONTINUOUS,
-    SIMULTANEOUS,
-    DUAL_CONTINUOUS
+    CONTINUOUS = 0,
+    SIMULTANEOUS = 1,
+    DUAL_CONTINUOUS = 2
 }
 
 /// <summary>
@@ -18,7 +18,7 @@ public class FlowController : MonoBehaviour
     private static FlowController _instance;
     public static FlowController Instance { get { return _instance; } private set { } }
 
-    private AnimateVAT[] flows;
+    [HideInInspector] public AnimateVAT[] Flows;
     private List<AnimateVAT> activeFlows;
 
     private float duration = 2f;
@@ -57,11 +57,11 @@ public class FlowController : MonoBehaviour
     private void InitFlows()
     {
         activeFlows = new List<AnimateVAT>();
-        flows = new AnimateVAT[transform.childCount];
+        Flows = new AnimateVAT[transform.childCount];
 
         for (int i = 0; i < transform.childCount; i++)
         {
-            flows[i] = transform.GetChild(i).GetComponentInChildren<AnimateVAT>();
+            Flows[i] = transform.GetChild(i).GetComponentInChildren<AnimateVAT>();
         }
     }
 
@@ -112,11 +112,11 @@ public class FlowController : MonoBehaviour
 
     public void SetFlowActive(int i)
     {
-        if (activeFlows.Contains(flows[i]))
+        if (activeFlows.Contains(Flows[i]))
         {
             return;
         }
-        activeFlows.Add(flows[i]);
+        activeFlows.Add(Flows[i]);
     }
 
     public void SetOnlyFlowsActive(int[] flowArray)
@@ -131,11 +131,11 @@ public class FlowController : MonoBehaviour
     {
         for (int i = 0; i < flowArray.Length; i++)
         {
-            if (activeFlows.Contains(flows[flowArray[i]]))
+            if (activeFlows.Contains(Flows[flowArray[i]]))
             {
                 return;
             }
-            activeFlows.Add(flows[flowArray[i]]);
+            activeFlows.Add(Flows[flowArray[i]]);
         }
     }
 
@@ -161,7 +161,7 @@ public class FlowController : MonoBehaviour
     /// </summary>
     private void DisableAll()
     {
-        foreach (AnimateVAT flow in flows)
+        foreach (AnimateVAT flow in Flows)
         {
             flow.StopAnimation();
             flow.gameObject.SetActive(false);
