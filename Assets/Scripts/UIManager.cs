@@ -41,12 +41,21 @@ public class UIManager : MonoBehaviour
 
     private void SetColorMode(ColorMode cMode)
     {
-        ColorController.Instance.colorMode = cMode;
-        ColorController.Instance.SetColors();
+        ColorController.Instance.SetColors(cMode);
     }
 
     public void DisableFlows()
     {
         FlowController.Instance.ResetFlows();
+    }
+
+    public void SetLabelMode(int i)
+    {
+        SetLabelMode((LabelDisplay)i);
+    }
+
+    private void SetLabelMode(LabelDisplay lMode)
+    {
+        LabelController.Instance.ShowLabels(lMode);
     }
 }

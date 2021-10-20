@@ -13,23 +13,19 @@ public class ColorController : MonoBehaviour
     private static ColorController _instance;
     public static ColorController Instance { get { return _instance; } private set { } }
 
-    private Color32 blood;
-    private Color32 red;
-    private Color32 blue;
-    public ColorMode colorMode { get; set; }
+    [SerializeField] private Color32 blood = new Color32(128, 13, 0, 192);
+    [SerializeField] private Color32 red = new Color32(215, 22, 0, 192);
+    [SerializeField] private Color32 blue = new Color32(23, 23, 197, 192);
+    public ColorMode colorMode = ColorMode.STANDARD;
 
     private void Awake()
     {
         Init();
-        blood = new Color32(128, 13, 0, 192);
-        red = new Color32(215, 22, 0, 192);
-        blue = new Color32(23, 23, 197, 192);
-        colorMode = ColorMode.STANDARD;
     }
 
     private void Start()
     {
-        SetColors();
+        SetColors(colorMode);
     }
 
     private void Init()
@@ -44,17 +40,18 @@ public class ColorController : MonoBehaviour
         }
     }
 
-    public void SetColors()
+    public void SetColors(ColorMode cMode)
     {
+        this.colorMode = cMode;
         for (int i = 0; i < Globals.LEFT_HEART.Length; i++)
         {
             FlowController.Instance.Flows[Globals.LEFT_HEART[i]].
-                SetShaderColor(colorMode == ColorMode.STANDARD ? blood : red);
+                SetShaderColor(cMode == ColorMode.STANDARD ? blood : red);
         }
         for (int i = 0; i < Globals.RIGHT_HEART.Length; i++)
         {
             FlowController.Instance.Flows[Globals.RIGHT_HEART[i]].
-                SetShaderColor(colorMode == ColorMode.STANDARD ? blood : blue);
+                SetShaderColor(cMode == ColorMode.STANDARD ? blood : blue);
         }
     }
 }

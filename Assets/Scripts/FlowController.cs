@@ -47,7 +47,6 @@ public class FlowController : MonoBehaviour
         }
         else
         {
-
             _instance = this;
         }
     }
@@ -217,32 +216,4 @@ public class FlowController : MonoBehaviour
                 break;
         }
     }
-
-    /// <summary>
-    /// In/Decrements the <paramref name="current"></paramref> value in alternating as/descending order. Repeats edge cases 2 times.
-    /// </summary>
-    //private void PingPongFlows()
-    //{
-    //    if (forward)
-    //    {
-    //        current++;
-    //    }
-    //    else
-    //    {
-    //        current--;
-    //    }
-
-    //    EnableOnly(current);
-
-    //    if (current == flows.Length - 1 && forward)
-    //    {
-    //        forward = !forward;
-    //        current++;
-    //    }
-    //    else if (current == 0 && !forward)
-    //    {
-    //        forward = !forward;
-    //        current--;
-    //    }
-    //}
 }

@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
                 Globals.SETTINGS.InitCurrent();
                 SaveSystem.SaveJSON<Settings>(Globals.SETTINGS, "currentSettings");
             }
-            //Globals.SETTINGS.Apply();
+            Globals.SETTINGS.Apply();
         }
 
         if (SceneManager.GetActiveScene().name.Equals("CARdiFlow"))
