@@ -24,9 +24,7 @@ public class FlowController : MonoBehaviour
     private float duration = 2f;
     private float durationTimer = 0f;
 
-    public int overrideCurrent = -1;
     private int current = 0;
-    private bool forward = true;
 
     public FlowMode flowMode = FlowMode.CONTINUOUS;
 
@@ -90,22 +88,27 @@ public class FlowController : MonoBehaviour
     private void EnableOnlyCurrent()
     {
         DisableAll();
-        activeFlows[current].gameObject.SetActive(true);
+        if (activeFlows != null && activeFlows.Count != 0)
+        {
+            activeFlows[current].gameObject.SetActive(true);
+        }
     }
 
     private void EnableOnlyActiveFlows()
     {
         DisableAll();
-        foreach (AnimateVAT flow in activeFlows)
+        if (activeFlows != null && activeFlows.Count != 0)
         {
-            flow.gameObject.SetActive(true);
+            foreach (AnimateVAT flow in activeFlows)
+            {
+                flow.gameObject.SetActive(true);
+            }
         }
     }
 
     public void SetOnlyFlowActive(int i)
     {
-        DisableAll();
-        activeFlows.Clear();
+        ResetFlows();
         SetFlowActive(i);
         current = 0;
     }
@@ -121,8 +124,7 @@ public class FlowController : MonoBehaviour
 
     public void SetOnlyFlowsActive(int[] flowArray)
     {
-        DisableAll();
-        activeFlows.Clear();
+        ResetFlows();
         SetFlowsActive(flowArray);
         current = 0;
     }
@@ -168,6 +170,12 @@ public class FlowController : MonoBehaviour
         }
     }
 
+    public void ResetFlows()
+    {
+        DisableAll();
+        activeFlows.Clear();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -182,11 +190,10 @@ public class FlowController : MonoBehaviour
         {
             durationTimer = 0f;
 
-            if (activeFlows.Count == 0)
+            if (activeFlows != null && activeFlows.Count != 0)
             {
-                return;
+                HandleFlowing();
             }
-            HandleFlowing();
         }
     }
 

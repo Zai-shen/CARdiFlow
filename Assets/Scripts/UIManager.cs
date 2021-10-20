@@ -44,4 +44,9 @@ public class UIManager : MonoBehaviour
         ColorController.Instance.colorMode = cMode;
         ColorController.Instance.SetColors();
     }
+
+    public void DisableFlows()
+    {
+        FlowController.Instance.ResetFlows();
+    }
 }
