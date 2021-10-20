@@ -337,6 +337,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TitleScreenUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5273770855538288607, guid: 0a09c790a50156741873bc395b3a55e2, type: 3}
+      propertyPath: m_FallbackOnIMGUIKeyboardEvents
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a09c790a50156741873bc395b3a55e2, type: 3}
 --- !u!1 &1377123529

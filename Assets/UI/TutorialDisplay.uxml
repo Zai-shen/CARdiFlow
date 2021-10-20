@@ -2,15 +2,15 @@
     <Style src="Menu.uss" />
     <ui:VisualElement name="screen" class="menu" style="flex-grow: 1; flex-direction: row;">
         <ui:VisualElement name="left-space" style="width: 30%;" />
-        <CreditsDisplay class="mid-screen">
-            <ui:Label text="Credits" display-tooltip-when-elided="true" name="title" class="header" />
+        <TutorialDisplay class="mid-screen">
+            <ui:Label text="Tutorial" display-tooltip-when-elided="true" name="title" class="header" />
             <ui:ScrollView scroll-deceleration-rate="0.2" touch-scroll-type="Clamped" horizontal-scroller-visibility="Hidden" focusable="true" show-horizontal-scroller="true" show-vertical-scroller="true" vertical-scroller-visibility="AlwaysVisible" elasticity="0" style="width: 100%; height: 30%;">
-                <ui:Label text="CARdiFlow was developed by Miran Jank as part of the scientific work at the Technical University of Vienna to obtain the title Bachelor of Science.&#10;&#10;A huge thank you goes to Assistant Prof. Dr. Renata Raidou, for her constant support and wise advice, without which this work would not have been possible.&#10;&#10;I would also like to thank my family and my partner Dr. Bianca Scheschy, who have supported me in all my endeavors and made my time much easier.&#10;&#10;Furthermore, I would like to thank all participants who helped me with the development and the empirical evaluation of the effects of this application." display-tooltip-when-elided="true" name="credit-contents" class="scroll-view-contents" style="height: 100%; font-size: 48px;" />
+                <ui:Label text="What I am expecting of you:&#10;Do The Cha Cha&#10;Be Smooth&#10;Spin Real Fast&#10;Do A Barrel Roll &#10;etc&#10;etc&#10;et&#10;c&#10;et&#10;c&#10;et&#10;c&#10;e&#10;etc" display-tooltip-when-elided="true" name="credit-contents" class="scroll-view-contents" style="height: 100%; font-size: 48px;" />
             </ui:ScrollView>
             <ui:VisualElement name="option-nav-box" class="button-split-box">
                 <ui:Button text="BACK" display-tooltip-when-elided="true" name="back-button" class="menu-button" />
             </ui:VisualElement>
-        </CreditsDisplay>
+        </TutorialDisplay>
         <ui:VisualElement name="right-space" style="width: 30%;" />
     </ui:VisualElement>
 </ui:UXML>

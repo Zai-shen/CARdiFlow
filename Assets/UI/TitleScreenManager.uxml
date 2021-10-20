@@ -2,10 +2,12 @@
     <ui:Template name="TitleScreenDisplay" src="TitleScreenDisplay.uxml" />
     <ui:Template name="OptionsDisplay" src="OptionsDisplay.uxml" />
     <ui:Template name="CreditsDisplay" src="CreditsDisplay.uxml" />
+    <ui:Template name="TutorialDisplay" src="TutorialDisplay.uxml" />
     <Style src="Menu.uss" />
     <TitleScreenManager class="menu">
         <ui:Instance template="TitleScreenDisplay" name="TitleScreenDisplay" class="menu" style="display: flex;" />
         <ui:Instance template="OptionsDisplay" name="OptionsDisplay" class="menu" style="display: none;" />
+        <ui:Instance template="TutorialDisplay" name="TutorialDisplay" class="menu" style="display: none;" />
         <ui:Instance template="CreditsDisplay" name="CreditsDisplay" class="menu" style="display: none;" />
     </TitleScreenManager>
 </ui:UXML>

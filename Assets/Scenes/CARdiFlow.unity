@@ -180,7 +180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5783149116906855339, guid: db31129e26588c74a9d842ff105ce292, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db31129e26588c74a9d842ff105ce292, type: 3}
@@ -4129,7 +4129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5783149116906855339, guid: db31129e26588c74a9d842ff105ce292, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5783149117939741437, guid: db31129e26588c74a9d842ff105ce292, type: 3}
       propertyPath: m_text
@@ -4338,7 +4338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5783149116906855339, guid: db31129e26588c74a9d842ff105ce292, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db31129e26588c74a9d842ff105ce292, type: 3}
@@ -8314,7 +8314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5783149116906855339, guid: db31129e26588c74a9d842ff105ce292, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5783149117939741437, guid: db31129e26588c74a9d842ff105ce292, type: 3}
       propertyPath: m_text
@@ -8382,7 +8382,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Flows: []
-  overrideCurrent: -1
   flowMode: 0
 --- !u!114 &1792484273
 MonoBehaviour:
@@ -9692,7 +9691,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5783149116906855339, guid: db31129e26588c74a9d842ff105ce292, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5783149117939741437, guid: db31129e26588c74a9d842ff105ce292, type: 3}
       propertyPath: m_text
@@ -10191,7 +10190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5783149116906855339, guid: db31129e26588c74a9d842ff105ce292, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5783149117939741437, guid: db31129e26588c74a9d842ff105ce292, type: 3}
       propertyPath: m_text

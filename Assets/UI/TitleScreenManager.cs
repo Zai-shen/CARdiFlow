@@ -1,18 +1,24 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 public class TitleScreenManager : VisualElement
 {
     VisualElement m_TitleScreen;
     VisualElement m_OptionsScreen;
     VisualElement m_CreditsScreen;
+    VisualElement m_TutorialScreen;
     Button m_OptionsButton;
     Button m_OptionsBackButton;
     Button m_OptionsApplyButton;
     Button m_CreditsButton;
     Button m_CreditsBackButton;
+    Button m_TutorialButton;
+    Button m_TutorialBackButton;
     Button m_ExitButton;
+
+    private List<VisualElement> screens;
 
     public static string m_SceneName = "CARdiFlow";
 
@@ -45,6 +51,15 @@ public class TitleScreenManager : VisualElement
             m_TitleScreen = this.Q("TitleScreenDisplay");
             m_OptionsScreen = this.Q("OptionsDisplay");
             m_CreditsScreen = this.Q("CreditsDisplay");
+            m_TutorialScreen = this.Q("TutorialDisplay");
+
+            screens = new List<VisualElement>()
+            {
+                m_TitleScreen,
+                m_OptionsScreen,
+                m_TutorialScreen,
+                m_CreditsScreen
+            };
 
             m_OptionsButton = m_TitleScreen?.Q<Button>("options-button");
             m_OptionsButton.RegisterCallback<ClickEvent>(ev => EnableOptionsScreen());
@@ -57,6 +72,14 @@ public class TitleScreenManager : VisualElement
             m_OptionsApplyButton = m_OptionsScreen.Q<Button>("apply-button");
             m_OptionsApplyButton.RegisterCallback<ClickEvent>(ev => { Globals.SETTINGS.Apply(); EnableTitleScreen(); });
             m_OptionsApplyButton.clickable.clicked += () => { Globals.SETTINGS.Apply(); EnableTitleScreen(); };
+
+            m_TutorialButton = m_TitleScreen?.Q<Button>("tutorial-button");
+            m_TutorialButton.RegisterCallback<ClickEvent>(ev => EnableTutorialScreen());
+            m_TutorialButton.clickable.clicked += EnableTutorialScreen;
+
+            m_TutorialBackButton = m_TutorialScreen.Q<Button>("back-button");
+            m_TutorialBackButton.RegisterCallback<ClickEvent>(ev => EnableTitleScreen());
+            m_TutorialBackButton.clickable.clicked += EnableTitleScreen;
 
             m_CreditsButton = m_TitleScreen?.Q<Button>("credits-button");
             m_CreditsButton.RegisterCallback<ClickEvent>(ev => EnableCreditsScreen());
@@ -77,28 +100,32 @@ public class TitleScreenManager : VisualElement
         this.UnregisterCallback<GeometryChangedEvent>(OnGeometryChange);
     }
 
+    void DisplayOnly(VisualElement ve)
+    {
+        foreach (VisualElement screen in screens)
+        {
+            screen.style.display = DisplayStyle.None;
+        }
+        ve.style.display = DisplayStyle.Flex;
+    }
+
     void EnableTitleScreen()
     {
-        m_TitleScreen.style.display = DisplayStyle.Flex;
-        m_OptionsScreen.style.display = DisplayStyle.None;
-        m_CreditsScreen.style.display = DisplayStyle.None;
-        m_ExitButton.style.display = DisplayStyle.Flex;
+        DisplayOnly(m_TitleScreen);
     }
 
     void EnableOptionsScreen()
     {
-        m_TitleScreen.style.display = DisplayStyle.None;
-        m_OptionsScreen.style.display = DisplayStyle.Flex;
-        m_CreditsScreen.style.display = DisplayStyle.None;
-        m_ExitButton.style.display = DisplayStyle.None;
+        DisplayOnly(m_OptionsScreen);
     }
 
     void EnableCreditsScreen()
     {
-        m_TitleScreen.style.display = DisplayStyle.None;
-        m_OptionsScreen.style.display = DisplayStyle.None;
-        m_CreditsScreen.style.display = DisplayStyle.Flex;
-        m_ExitButton.style.display = DisplayStyle.None;
+        DisplayOnly(m_CreditsScreen);
+    }
+    void EnableTutorialScreen()
+    {
+        DisplayOnly(m_TutorialScreen);
     }
 
     void ExitApplication()

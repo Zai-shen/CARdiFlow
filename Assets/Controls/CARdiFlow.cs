@@ -89,6 +89,15 @@ public partial class @CARdiFlow : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""4d0f2861-35d1-43d9-892d-507e299b8c2c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -738,6 +747,17 @@ public partial class @CARdiFlow : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""AnyShift"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""79e12e42-11d5-4ce7-bc63-03177a85620e"",
+                    ""path"": ""*/{Submit}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse;Gamepad;Touch;Joystick;XR"",
+                    ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1407,6 +1427,7 @@ public partial class @CARdiFlow : IInputActionCollection2, IDisposable
         m_Player_SetSelectionGroup = m_Player.FindAction("SetSelectionGroup", throwIfNotFound: true);
         m_Player_Exit = m_Player.FindAction("Exit", throwIfNotFound: true);
         m_Player_AnyShift = m_Player.FindAction("AnyShift", throwIfNotFound: true);
+        m_Player_Submit = m_Player.FindAction("Submit", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1486,6 +1507,7 @@ public partial class @CARdiFlow : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SetSelectionGroup;
     private readonly InputAction m_Player_Exit;
     private readonly InputAction m_Player_AnyShift;
+    private readonly InputAction m_Player_Submit;
     public struct PlayerActions
     {
         private @CARdiFlow m_Wrapper;
@@ -1497,6 +1519,7 @@ public partial class @CARdiFlow : IInputActionCollection2, IDisposable
         public InputAction @SetSelectionGroup => m_Wrapper.m_Player_SetSelectionGroup;
         public InputAction @Exit => m_Wrapper.m_Player_Exit;
         public InputAction @AnyShift => m_Wrapper.m_Player_AnyShift;
+        public InputAction @Submit => m_Wrapper.m_Player_Submit;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1527,6 +1550,9 @@ public partial class @CARdiFlow : IInputActionCollection2, IDisposable
                 @AnyShift.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAnyShift;
                 @AnyShift.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAnyShift;
                 @AnyShift.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAnyShift;
+                @Submit.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSubmit;
+                @Submit.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSubmit;
+                @Submit.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSubmit;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1552,6 +1578,9 @@ public partial class @CARdiFlow : IInputActionCollection2, IDisposable
                 @AnyShift.started += instance.OnAnyShift;
                 @AnyShift.performed += instance.OnAnyShift;
                 @AnyShift.canceled += instance.OnAnyShift;
+                @Submit.started += instance.OnSubmit;
+                @Submit.performed += instance.OnSubmit;
+                @Submit.canceled += instance.OnSubmit;
             }
         }
     }
@@ -1723,6 +1752,7 @@ public partial class @CARdiFlow : IInputActionCollection2, IDisposable
         void OnSetSelectionGroup(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
         void OnAnyShift(InputAction.CallbackContext context);
+        void OnSubmit(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
