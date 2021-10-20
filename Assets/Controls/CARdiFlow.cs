@@ -721,6 +721,17 @@ public partial class @CARdiFlow : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""614f6120-9295-4d37-99d8-b9e72567678a"",
+                    ""path"": ""*/{Back}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touch"",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4e70c9ed-327e-4f75-806c-b0d664cf44e8"",
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",

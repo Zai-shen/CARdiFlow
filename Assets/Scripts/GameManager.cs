@@ -6,10 +6,13 @@ using Vuforia;
 
 public class GameManager : MonoBehaviour
 {
+    private bool respondToBackButton;
+
     private void Awake()
     {
         if (Globals.OPCONTROLS == null)
             Globals.OPCONTROLS = new OPlanControls();
+
 
         if (Globals.SETTINGS == null)
         {
@@ -23,11 +26,25 @@ public class GameManager : MonoBehaviour
             //Globals.SETTINGS.Apply();
         }
 
-        if (SceneManager.GetActiveScene().name.Equals("CARdiFlow") && VuforiaRuntime.Instance.InitializationState == VuforiaRuntime.InitState.NOT_INITIALIZED)
+        if (SceneManager.GetActiveScene().name.Equals("CARdiFlow"))
         {
-            Debug.Log("COMMAND: Had to init Vuforia manually!");
-            VuforiaConfiguration.Instance.Vuforia.DelayedInitialization = false;
-            VuforiaRuntime.Instance.InitVuforia();
+            if (VuforiaRuntime.Instance.InitializationState == VuforiaRuntime.InitState.NOT_INITIALIZED)
+            {
+                Debug.Log("COMMAND: Had to init Vuforia manually!");
+                VuforiaConfiguration.Instance.Vuforia.DelayedInitialization = false;
+                VuforiaRuntime.Instance.InitVuforia();
+            }
+            Input.backButtonLeavesApp = false;
+            respondToBackButton = true;
+        }else
+            Input.backButtonLeavesApp = true;
+    }
+
+    private void Update()
+    {
+        if (respondToBackButton && Globals.OPCONTROLS.Player.Exit.WasReleasedThisFrame())
+        {
+            SceneManager.LoadSceneAsync("MainMenu");
         }
     }
 

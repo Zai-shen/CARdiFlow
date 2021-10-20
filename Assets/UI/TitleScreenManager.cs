@@ -6,9 +6,12 @@ public class TitleScreenManager : VisualElement
 {
     VisualElement m_TitleScreen;
     VisualElement m_OptionsScreen;
+    VisualElement m_CreditsScreen;
     Button m_OptionsButton;
     Button m_OptionsBackButton;
     Button m_OptionsApplyButton;
+    Button m_CreditsButton;
+    Button m_CreditsBackButton;
     Button m_ExitButton;
 
     public static string m_SceneName = "CARdiFlow";
@@ -41,6 +44,7 @@ public class TitleScreenManager : VisualElement
 #endif
             m_TitleScreen = this.Q("TitleScreenDisplay");
             m_OptionsScreen = this.Q("OptionsDisplay");
+            m_CreditsScreen = this.Q("CreditsDisplay");
 
             m_OptionsButton = m_TitleScreen?.Q<Button>("options-button");
             m_OptionsButton.RegisterCallback<ClickEvent>(ev => EnableOptionsScreen());
@@ -54,7 +58,15 @@ public class TitleScreenManager : VisualElement
             m_OptionsApplyButton.RegisterCallback<ClickEvent>(ev => { Globals.SETTINGS.Apply(); EnableTitleScreen(); });
             m_OptionsApplyButton.clickable.clicked += () => { Globals.SETTINGS.Apply(); EnableTitleScreen(); };
 
-            m_ExitButton = this.Q<Button>("exit-button");
+            m_CreditsButton = m_TitleScreen?.Q<Button>("credits-button");
+            m_CreditsButton.RegisterCallback<ClickEvent>(ev => EnableCreditsScreen());
+            m_CreditsButton.clickable.clicked += EnableCreditsScreen;
+
+            m_CreditsBackButton = m_CreditsScreen.Q<Button>("back-button");
+            m_CreditsBackButton.RegisterCallback<ClickEvent>(ev => EnableTitleScreen());
+            m_CreditsBackButton.clickable.clicked += EnableTitleScreen;
+
+            m_ExitButton = m_TitleScreen?.Q<Button>("exit-button");
             m_ExitButton.RegisterCallback<ClickEvent>(ev => ExitApplication());
             m_ExitButton.clickable.clicked += ExitApplication;
 
@@ -69,6 +81,7 @@ public class TitleScreenManager : VisualElement
     {
         m_TitleScreen.style.display = DisplayStyle.Flex;
         m_OptionsScreen.style.display = DisplayStyle.None;
+        m_CreditsScreen.style.display = DisplayStyle.None;
         m_ExitButton.style.display = DisplayStyle.Flex;
     }
 
@@ -76,6 +89,15 @@ public class TitleScreenManager : VisualElement
     {
         m_TitleScreen.style.display = DisplayStyle.None;
         m_OptionsScreen.style.display = DisplayStyle.Flex;
+        m_CreditsScreen.style.display = DisplayStyle.None;
+        m_ExitButton.style.display = DisplayStyle.None;
+    }
+
+    void EnableCreditsScreen()
+    {
+        m_TitleScreen.style.display = DisplayStyle.None;
+        m_OptionsScreen.style.display = DisplayStyle.None;
+        m_CreditsScreen.style.display = DisplayStyle.Flex;
         m_ExitButton.style.display = DisplayStyle.None;
     }
 

@@ -1,5 +1,5 @@
 {
-    "name": "OPlan",
+    "name": "CARdiFlow",
     "maps": [
         {
             "name": "Player",
@@ -693,6 +693,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "614f6120-9295-4d37-99d8-b9e72567678a",
+                    "path": "*/{Back}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
                     "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false

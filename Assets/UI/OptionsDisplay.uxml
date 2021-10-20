@@ -5,8 +5,6 @@
         <OptionsDisplay class="mid-screen">
             <ui:Label text="Options" display-tooltip-when-elided="true" name="title" class="header" />
             <ui:VisualElement name="menu-box" style="width: 100%; height: auto; justify-content: flex-start; align-items: center;">
-                <uie:EnumField label="Screen Resolution" name="test-enumfield" include-obsolete-values="false" class="menu-dropdown" style="background-color: rgb(67, 67, 67); display: none;" />
-                <ui:Slider picking-mode="Ignore" label="SlidingSlider" value="42" high-value="100" name="Slider" class="menu-slider" style="display: none;" />
                 <ui:VisualElement name="screen-toggle-box" class="button-split-box">
                     <ui:Toggle label="Full Screen" name="fullscreen-toggle" class="menu-toggle" style="display: flex;" />
                     <ui:Toggle label="VSync" name="vsync-toggle" class="menu-toggle" style="display: flex;" />
