@@ -34,6 +34,18 @@ public class UIManager : MonoBehaviour
         ActivateOnlyFlows(Globals.RIGHT_HEART);
     }
 
+    public void SetColorMode(bool deOxyColor)
+    {
+        if (deOxyColor)
+        {
+            SetColorMode(1);
+        }
+        else
+        {
+            SetColorMode(0);
+        }
+    }
+
     public void SetColorMode(int i)
     {
         SetColorMode((ColorMode)i);

@@ -173,6 +173,7 @@ public class FlowController : MonoBehaviour
     {
         DisableAll();
         activeFlows.Clear();
+        current = 0;
     }
 
     // Update is called once per frame
