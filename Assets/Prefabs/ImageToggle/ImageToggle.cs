@@ -82,6 +82,9 @@ public class ImageToggle : Toggle
         if (Application.isPlaying)
         {
 #endif
+            //Toggle group exception
+            backgroundImage.color = isOn ? backgroundActivated : backgroundOff;
+
             if (isOn)
             {
                 toggleImage.sprite = activatedSprite;

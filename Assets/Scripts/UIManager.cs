@@ -61,9 +61,28 @@ public class UIManager : MonoBehaviour
         FlowController.Instance.ResetFlows();
     }
 
-    public void SetLabelMode(int i)
+    public void SetLabelModeNone(bool active)
     {
-        SetLabelMode((LabelDisplay)i);
+        if (active)
+            SetLabelMode(LabelDisplay.NONE);
+    }
+
+    public void SetLabelModeSparse(bool active)
+    {
+        if (active)
+            SetLabelMode(LabelDisplay.SPARSE);
+    }
+
+    public void SetLabelModeModerate(bool active)
+    {
+        if (active)
+            SetLabelMode(LabelDisplay.MODERATE);
+    }
+
+    public void SetLabelModePrecise(bool active)
+    {
+        if (active)
+            SetLabelMode(LabelDisplay.PRECISE);
     }
 
     private void SetLabelMode(LabelDisplay lMode)
