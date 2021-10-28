@@ -1,24 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ImageToggle : Selectable
+public class ImageToggle : Toggle
 {
-    public Sprite onSprite;
-
-    private Toggle toggle;
+    public Sprite activatedSprite;
 
     private Image toggleImage;
     private Image backgroundImage;
     private Sprite toggleImageSprite;
 
-    [SerializeField] private Color32 backgroundOff = new Color32(255,255,255,255);
-    [SerializeField] private Color32 backgroundActivated = new Color32(215,215,215,255);
+    public Color32 backgroundOff = new Color32(255, 255, 255, 255);
+    public Color32 backgroundActivated = new Color32(215, 215, 215, 255);
 
     protected override void Awake()
     {
         base.Awake();
 
-        toggle = GetComponent<Toggle>();
 #if UNITY_EDITOR
         if (Application.isPlaying)
         {
@@ -26,7 +23,7 @@ public class ImageToggle : Selectable
             backgroundImage = transform.parent.GetChild(transform.GetSiblingIndex() - 2).GetComponent<Image>();
             toggleImage = transform.parent.GetChild(transform.GetSiblingIndex() - 1).GetComponent<Image>();
             toggleImageSprite = toggleImage.sprite;
-            if (onSprite == null) onSprite = toggleImageSprite;
+            if (activatedSprite == null) activatedSprite = toggleImageSprite;
 #if UNITY_EDITOR
         }
 #endif
@@ -35,13 +32,13 @@ public class ImageToggle : Selectable
     protected override void OnEnable()
     {
         base.OnEnable();
-        toggle.onValueChanged.AddListener(OnToggleValueChangedImage);
+        this.onValueChanged.AddListener(OnToggleValueChangedImage);
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        toggle.onValueChanged.RemoveListener(OnToggleValueChangedImage);
+        this.onValueChanged.RemoveListener(OnToggleValueChangedImage);
     }
 
     protected override void DoStateTransition(SelectionState state, bool instant)
@@ -52,8 +49,8 @@ public class ImageToggle : Selectable
         if (Application.isPlaying)
         {
 #endif
-            Color32 currentColor = toggle.isOn ? backgroundActivated : backgroundOff;
-            Color32 currentInverseColor = toggle.isOn ? backgroundOff : backgroundActivated;
+            Color32 currentColor = this.isOn ? backgroundActivated : backgroundOff;
+            Color32 currentInverseColor = this.isOn ? backgroundOff : backgroundActivated;
 
             switch (state)
             {
@@ -64,7 +61,7 @@ public class ImageToggle : Selectable
                     backgroundImage.color = currentInverseColor;
                     break;
                 case SelectionState.Selected:
-                    backgroundImage.color = currentColor;
+                    backgroundImage.color = currentInverseColor;
                     break;
                 case SelectionState.Disabled:
                     backgroundImage.color = Color.white;
@@ -87,7 +84,7 @@ public class ImageToggle : Selectable
 #endif
             if (isOn)
             {
-                toggleImage.sprite = onSprite;
+                toggleImage.sprite = activatedSprite;
             }
             else
             {
