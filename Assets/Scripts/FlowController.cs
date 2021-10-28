@@ -197,14 +197,30 @@ public class FlowController : MonoBehaviour
         }
     }
 
+    //0&3
+    //1&4
+    //2&5
+    private void HandleDualMode() {
+        if (current >= Flows.Length / 2)
+        {
+            current = 0;
+        }
+
+        activeFlows.Clear();
+        activeFlows.Add(Flows[current]);
+        activeFlows.Add(Flows[current + 3]);
+
+        current++;
+    }
+
     private void HandleFlowing()
     {
         switch (flowMode)
         {
             case FlowMode.DUAL_CONTINUOUS:
-                //0&3
-                //1&4
-                //2&5
+                HandleDualMode();
+                EnableOnlyActiveFlows();
+                PlaySimultaneous();
                 break;
             case FlowMode.SIMULTANEOUS:
                 EnableOnlyActiveFlows();

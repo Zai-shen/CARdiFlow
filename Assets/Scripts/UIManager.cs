@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
         ColorController.Instance.SetColors(cMode);
     }
 
-    public void DisableFlows()
+    public void ResetFlows()
     {
         FlowController.Instance.ResetFlows();
     }
@@ -69,5 +69,15 @@ public class UIManager : MonoBehaviour
     private void SetLabelMode(LabelDisplay lMode)
     {
         LabelController.Instance.ShowLabels(lMode);
+    }
+
+    public void SetFlowMode(int i)
+    {
+        SetFlowMode((FlowMode)i);
+    }
+
+    private void SetFlowMode(FlowMode fMode)
+    {
+        FlowController.Instance.flowMode = fMode;
     }
 }
