@@ -4,9 +4,8 @@ using UnityEngine;
 
 public enum FlowMode
 {
-    CONTINUOUS = 0,
-    SIMULTANEOUS = 1,
-    DUAL_CONTINUOUS = 2
+    SINGLE = 0,
+    DUAL_CONTINUOUS = 1
 }
 
 /// <summary>
@@ -26,7 +25,7 @@ public class FlowController : MonoBehaviour
 
     private int current = 0;
 
-    public FlowMode flowMode = FlowMode.CONTINUOUS;
+    public FlowMode flowMode = FlowMode.SINGLE;
 
     private bool isTracked;
 
@@ -81,13 +80,15 @@ public class FlowController : MonoBehaviour
         }
     }
 
+    private bool ActiveFlowsExist() => activeFlows != null && activeFlows.Count != 0;
+
     /// <summary>
     /// Disables all flows, then enables the flow with index <see cref="current"/>.
     /// </summary>
     private void EnableOnlyCurrent()
     {
         DisableAll();
-        if (activeFlows != null && activeFlows.Count != 0)
+        if (ActiveFlowsExist())
         {
             activeFlows[current].gameObject.SetActive(true);
         }
@@ -96,7 +97,7 @@ public class FlowController : MonoBehaviour
     private void EnableOnlyActiveFlows()
     {
         DisableAll();
-        if (activeFlows != null && activeFlows.Count != 0)
+        if (ActiveFlowsExist())
         {
             foreach (AnimateVAT flow in activeFlows)
             {
@@ -109,12 +110,12 @@ public class FlowController : MonoBehaviour
     {
         ResetFlows();
         SetFlowActive(i);
-        current = 0;
+        ForceAnimation();
     }
 
     public void SetFlowActive(int i)
     {
-        if (activeFlows.Contains(Flows[i]))
+        if (ActiveFlowsExist() && activeFlows.Contains(Flows[i]))
         {
             return;
         }
@@ -125,18 +126,17 @@ public class FlowController : MonoBehaviour
     {
         ResetFlows();
         SetFlowsActive(flowArray);
-        current = 0;
+        ForceAnimation();
     }
 
     public void SetFlowsActive(int[] flowArray)
     {
         for (int i = 0; i < flowArray.Length; i++)
         {
-            if (activeFlows.Contains(Flows[flowArray[i]]))
+            if (!activeFlows.Contains(Flows[flowArray[i]]))
             {
-                return;
+                activeFlows.Add(Flows[flowArray[i]]);
             }
-            activeFlows.Add(Flows[flowArray[i]]);
         }
     }
 
@@ -190,25 +190,38 @@ public class FlowController : MonoBehaviour
         {
             durationTimer = 0f;
 
-            if (activeFlows != null && activeFlows.Count != 0)
+            if (ActiveFlowsExist())
             {
                 HandleFlowing();
             }
         }
     }
 
-    //0&3
-    //1&4
-    //2&5
+    private void ForceAnimation()
+    {
+        durationTimer = duration;
+    }
+
+    public void SetFlowMode(FlowMode fMode)
+    {
+        flowMode = fMode;
+        if (fMode == FlowMode.DUAL_CONTINUOUS)
+        {
+            HandleDualMode();
+            ForceAnimation();
+        }
+    }
+
     private void HandleDualMode() {
-        if (current >= Flows.Length / 2)
+        activeFlows.Clear();
+
+        if (current >= (Flows.Length / 2))
         {
             current = 0;
         }
 
-        activeFlows.Clear();
         activeFlows.Add(Flows[current]);
-        activeFlows.Add(Flows[current + 3]);
+        activeFlows.Add(Flows[current + (Flows.Length / 2)]);
 
         current++;
     }
@@ -222,11 +235,7 @@ public class FlowController : MonoBehaviour
                 EnableOnlyActiveFlows();
                 PlaySimultaneous();
                 break;
-            case FlowMode.SIMULTANEOUS:
-                EnableOnlyActiveFlows();
-                PlaySimultaneous();
-                break;
-            case FlowMode.CONTINUOUS:
+            case FlowMode.SINGLE:
             default:
                 EnableOnlyCurrent();
                 Play();

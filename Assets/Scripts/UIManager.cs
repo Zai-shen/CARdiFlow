@@ -4,51 +4,60 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public void ActivateFlow(int i)
+    private void ActivateFlow(int i)
     {
         FlowController.Instance.SetFlowActive(i);
     }
 
-    public void ActivateFlows(int[] flows)
+    private void ActivateFlows(int[] flows)
     {
         FlowController.Instance.SetFlowsActive(flows);
     }
 
-    public void ActivateOnlyFlow(int i)
+    private void ActivateOnlyFlow(int i)
     {
         FlowController.Instance.SetOnlyFlowActive(i);
     }
 
-    public void ActivateOnlyFlows(int[] flows)
+    private void ActivateOnlyFlows(int[] flows)
     {
         FlowController.Instance.SetOnlyFlowsActive(flows);
     }
 
-    public void ActivateLeft()
+    public void ActivateRightAtrium(bool active)
     {
-        ActivateOnlyFlows(Globals.LEFT_HEART);
+        if (active) ActivateOnlyFlow(0); 
     }
 
-    public void ActivateRight()
+    public void ActivateRightVentricle(bool active)
     {
-        ActivateOnlyFlows(Globals.RIGHT_HEART);
+        if (active) ActivateOnlyFlow(1);
+    }
+
+    public void ActivatePulmonaryArtery(bool active)
+    {
+        if (active) ActivateOnlyFlow(2);
+    }
+
+    public void ActivateLeftAtrium(bool active)
+    {
+        if (active) ActivateOnlyFlow(3);
+    }
+
+    public void ActivateLeftVentricle(bool active)
+    {
+        if (active) ActivateOnlyFlow(4);
+    }
+
+    public void ActivateAorta(bool active)
+    {
+        if (active) ActivateOnlyFlow(5);
     }
 
     public void SetColorMode(bool deOxyColor)
     {
-        if (deOxyColor)
-        {
-            SetColorMode(1);
-        }
-        else
-        {
-            SetColorMode(0);
-        }
-    }
-
-    public void SetColorMode(int i)
-    {
-        SetColorMode((ColorMode)i);
+        if (deOxyColor) SetColorMode(ColorMode.DE_OXYGENATED);
+        else SetColorMode(ColorMode.STANDARD);
     }
 
     private void SetColorMode(ColorMode cMode)
@@ -56,33 +65,24 @@ public class UIManager : MonoBehaviour
         ColorController.Instance.SetColors(cMode);
     }
 
-    public void ResetFlows()
-    {
-        FlowController.Instance.ResetFlows();
-    }
-
     public void SetLabelModeNone(bool active)
     {
-        if (active)
-            SetLabelMode(LabelDisplay.NONE);
+        if (active) SetLabelMode(LabelDisplay.NONE);
     }
 
     public void SetLabelModeSparse(bool active)
     {
-        if (active)
-            SetLabelMode(LabelDisplay.SPARSE);
+        if (active) SetLabelMode(LabelDisplay.SPARSE);
     }
 
     public void SetLabelModeModerate(bool active)
     {
-        if (active)
-            SetLabelMode(LabelDisplay.MODERATE);
+        if (active) SetLabelMode(LabelDisplay.MODERATE);
     }
 
     public void SetLabelModePrecise(bool active)
     {
-        if (active)
-            SetLabelMode(LabelDisplay.PRECISE);
+        if (active) SetLabelMode(LabelDisplay.PRECISE);
     }
 
     private void SetLabelMode(LabelDisplay lMode)
@@ -90,13 +90,19 @@ public class UIManager : MonoBehaviour
         LabelController.Instance.ShowLabels(lMode);
     }
 
-    public void SetFlowMode(int i)
+    public void SetFlowModeDual(bool active)
     {
-        SetFlowMode((FlowMode)i);
+        if (active) SetFlowMode(FlowMode.DUAL_CONTINUOUS);
+        else SetFlowMode(FlowMode.SINGLE);
     }
 
     private void SetFlowMode(FlowMode fMode)
     {
-        FlowController.Instance.flowMode = fMode;
+        FlowController.Instance.SetFlowMode(fMode);
+    }
+
+    public void ResetFlows(bool active)
+    {
+        if (active) FlowController.Instance.ResetFlows();
     }
 }
