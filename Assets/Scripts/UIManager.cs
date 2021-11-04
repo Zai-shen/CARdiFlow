@@ -103,6 +103,10 @@ public class UIManager : MonoBehaviour
 
     public void ResetFlows(bool active)
     {
-        if (active) FlowController.Instance.ResetFlows();
+        if (active)
+        {
+            FlowController.Instance.ResetAll();
+            ValveController.Instance.ResetAll();
+        }
     }
 }

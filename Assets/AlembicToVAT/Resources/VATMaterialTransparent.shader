@@ -55,5 +55,4 @@ Shader "VATMaterialTransparent"
 		ENDCG
 	}
 	Fallback "Diffuse"
-	CustomEditor "ASEMaterialInspector"
 }

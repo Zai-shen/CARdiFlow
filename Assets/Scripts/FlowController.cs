@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -93,7 +93,7 @@ public class FlowController : UnitySingleton<FlowController>
 
     public void SetOnlyFlowActive(int i)
     {
-        ResetFlows();
+        ResetAll();
         SetFlowActive(i);
         ForceAnimation();
     }
@@ -109,7 +109,7 @@ public class FlowController : UnitySingleton<FlowController>
 
     public void SetOnlyFlowsActive(int[] flowArray)
     {
-        ResetFlows();
+        ResetAll();
         SetFlowsActive(flowArray);
         ForceAnimation();
     }
@@ -127,15 +127,22 @@ public class FlowController : UnitySingleton<FlowController>
 
     private void PlaySimultaneous()
     {
+        int[] indices = new int[activeFlows.Count];
         for (int i = 0; i < activeFlows.Count; i++)
         {
             activeFlows[i].PlayAnimation(0f, 1f, duration);
+            indices[i] = Array.IndexOf(Flows, activeFlows[i]);
         }
+
+        ValveController.Instance.Activate(indices);
     }
 
     private void Play()
     {
+        ValveController.Instance.Activate(Array.IndexOf(Flows, activeFlows[current]));
+
         activeFlows[current++].PlayAnimation(0, 1f, duration);
+        
         if (current == activeFlows.Count)
         {
             current = 0;
@@ -154,7 +161,7 @@ public class FlowController : UnitySingleton<FlowController>
         }
     }
 
-    public void ResetFlows()
+    public void ResetAll()
     {
         DisableAll();
         activeFlows.Clear();
