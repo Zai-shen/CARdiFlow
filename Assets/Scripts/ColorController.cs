@@ -8,36 +8,16 @@ public enum ColorMode
     DE_OXYGENATED = 1
 }
 
-public class ColorController : MonoBehaviour
+public class ColorController : UnitySingleton<ColorController>
 {
-    private static ColorController _instance;
-    public static ColorController Instance { get { return _instance; } private set { } }
-
     [SerializeField] private Color32 blood = new Color32(128, 13, 0, 192);
     [SerializeField] private Color32 red = new Color32(215, 22, 0, 192);
     [SerializeField] private Color32 blue = new Color32(23, 23, 197, 192);
     public ColorMode colorMode = ColorMode.STANDARD;
 
-    private void Awake()
-    {
-        Init();
-    }
-
     private void Start()
     {
         SetColors(colorMode);
-    }
-
-    private void Init()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
     }
 
     public void SetColors(ColorMode cMode)

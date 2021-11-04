@@ -10,35 +10,20 @@ public enum LabelDisplay
     PRECISE = 3
 }
 
-public class LabelController : MonoBehaviour
+public class LabelController : UnitySingleton<LabelController>
 {
-    private static LabelController _instance;
-    public static LabelController Instance { get { return _instance; } private set { } }
-
     private List<GameObject> labels_sparse;
     private List<GameObject> labels_moderate;
     private List<GameObject> labels_precise;
 
     public LabelDisplay labelDisplay = LabelDisplay.NONE;
 
-    private void Awake()
+    protected override void Awake()
     {
-        Init();
+        base.Awake();
         InitLabels();
 
         ShowLabels(labelDisplay);
-    }
-
-    private void Init()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
     }
 
     private void InitLabels()

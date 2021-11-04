@@ -12,11 +12,8 @@ public enum FlowMode
 /// Handles flows and their de/activation.
 /// </summary>
 /// <author> Miran https://github.com/Zai-shen Jank </author>
-public class FlowController : MonoBehaviour
+public class FlowController : UnitySingleton<FlowController>
 {
-    private static FlowController _instance;
-    public static FlowController Instance { get { return _instance; } private set { } }
-
     [HideInInspector] public AnimateVAT[] Flows;
     private List<AnimateVAT> activeFlows;
 
@@ -30,24 +27,12 @@ public class FlowController : MonoBehaviour
     private bool isTracked;
 
     // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
-        Init();
+        base.Awake();
         InitFlows();
 
         DisableAll();
-    }
-
-    private void Init()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
     }
 
     private void InitFlows()
