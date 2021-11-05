@@ -3,6 +3,7 @@ using UnityEngine;
 
 public enum SettingEnums
 {
+    DISPLAY_FPS,
     FULL_S,
     VSYNC,
     SCREEN_R,
@@ -17,8 +18,9 @@ public class Settings
 {
     public int[] resolution;
     [System.NonSerialized]public List<string> availableResolutions;
-    public int vSyncCount;//0=off,1=60fps,2=30fps
+    public bool displayFPS;
     public bool fullScreen;
+    public int vSyncCount;//0=off,1=60fps,2=30fps
     public int graphicsLevel;//5>0
     public int anisotropicFiltering;//2>0
     public int antiAliasing; //8>0
@@ -52,6 +54,7 @@ public class Settings
         QualitySettings.antiAliasing = antiAliasing;
         QualitySettings.masterTextureLimit = textureDownsample;
         QualitySettings.shadowResolution = (ShadowResolution)shadowResolution;
+        FPSDisplay.Instance?.Show(displayFPS);
     }
 
     public List<string> GetCurrentAvailableResolutions()

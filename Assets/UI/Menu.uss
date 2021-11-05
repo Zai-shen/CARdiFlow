@@ -23,6 +23,8 @@
 
 .menu {
     flex-grow: 1;
+    background-image: resource('Textures/heart1080x1920');
+    -unity-background-image-tint-color: rgba(238, 15, 15, 0.29);
 }
 
 .menu-button {
@@ -52,11 +54,11 @@
 }
 
 .menu-button:hover {
-    border-left-color: rgb(204, 102, 0);
-    border-right-color: rgb(204, 102, 0);
-    border-top-color: rgb(204, 102, 0);
-    border-bottom-color: rgb(204, 102, 0);
-    color: rgb(204, 102, 0);
+    border-left-color: rgb(204, 51, 51);
+    border-right-color: rgb(204, 51, 51);
+    border-top-color: rgb(204, 51, 51);
+    border-bottom-color: rgb(204, 51, 51);
+    color: rgb(204, 51, 51);
 }
 
 .header {
@@ -68,13 +70,14 @@
     padding-right: 4px;
     padding-top: 4px;
     padding-bottom: 4px;
-    color: rgb(204, 102, 0);
+    color: rgb(204, 51, 51);
     margin-top: 12px;
     margin-right: 0;
     margin-bottom: 12px;
     margin-left: 0;
     width: 100%;
     -unity-font-style: bold;
+    text-shadow: 2px 2px 2px rgba(99, 14, 14, 0.5);
 }
 
 .menu-slider {

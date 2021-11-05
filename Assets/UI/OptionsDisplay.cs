@@ -21,8 +21,12 @@ public class OptionsDisplay : VisualElement
     {
 #if UNITY_EDITOR
         if (Application.isPlaying)
-        { 
+        {
 #endif
+            Toggle fpsToggle = m_OptionsScreen.Q<Toggle>("fps-toggle");
+            fpsToggle.value = Globals.SETTINGS.displayFPS;
+            fpsToggle.RegisterValueChangedCallback(x => SetSettingsProperty(
+                x.newValue, SettingEnums.DISPLAY_FPS, Globals.SETTINGS, "displayFPS"));
 
             Toggle fullScreenToggle = m_OptionsScreen.Q<Toggle>("fullscreen-toggle");
             fullScreenToggle.value = Globals.SETTINGS.fullScreen;
@@ -127,6 +131,7 @@ public class OptionsDisplay : VisualElement
 
         switch (enumType)
         {
+            case SettingEnums.DISPLAY_FPS:
             case SettingEnums.FULL_S:
                 if (bool.TryParse(value.ToString(), out bool boolval))
                     myFieldInfo.SetValue(settings, boolval);

@@ -3,11 +3,12 @@
     <ui:VisualElement name="screen" class="menu" style="flex-grow: 1; flex-direction: row;">
         <ui:VisualElement name="left-space" style="width: 30%;" />
         <OptionsDisplay class="mid-screen">
-            <ui:Label text="Options" display-tooltip-when-elided="true" name="title" class="header" />
+            <ui:Label text="Options" display-tooltip-when-elided="true" name="title" class="header" style="color: rgb(204, 51, 51);" />
             <ui:VisualElement name="menu-box" style="width: 100%; height: auto; justify-content: flex-start; align-items: center;">
+                <ui:Toggle label="Display Frames Per Second" name="fps-toggle" value="true" class="menu-toggle" style="display: flex;" />
                 <ui:VisualElement name="screen-toggle-box" class="button-split-box">
-                    <ui:Toggle label="Full Screen" name="fullscreen-toggle" class="menu-toggle" style="display: flex;" />
-                    <ui:Toggle label="VSync" name="vsync-toggle" class="menu-toggle" style="display: flex;" />
+                    <ui:Toggle label="Full Screen" name="fullscreen-toggle" value="true" class="menu-toggle" style="display: flex;" />
+                    <ui:Toggle label="VSync" name="vsync-toggle" value="true" class="menu-toggle" style="display: flex;" />
                 </ui:VisualElement>
                 <ui:DropdownField label="Screen Resolution" index="1" choices="a, b, c" name="screen-resolution-dd" class="menu-dropdown green-text" />
                 <ui:DropdownField label="Anisotropic Filtering" index="1" choices="a, b, c" name="aniso-filter-dd" class="menu-dropdown" />

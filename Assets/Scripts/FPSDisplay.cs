@@ -2,17 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FPSDisplay : MonoBehaviour
+public class FPSDisplay : UnitySingleton<FPSDisplay>
 {
-	float deltaTime = 0.0f;
+	[SerializeField]
+	private bool show = false;
+	private float deltaTime = 0.0f;
 
-	void Update()
+    protected override void Awake()
+    {
+		base.Awake();
+		DontDestroyOnLoad(this);
+    }
+
+    void Update()
 	{
 		deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 	}
 
+	public void Show(bool doShow) {
+		show = doShow;
+	}
+
 	void OnGUI()
 	{
+        if (!show)
+			return;
+
 		int w = Screen.width, h = Screen.height;
 
 		GUIStyle style = new GUIStyle();
