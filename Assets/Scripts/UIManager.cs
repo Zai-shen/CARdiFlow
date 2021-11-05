@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public void SetHeartSize(float sizeInCm)
+    {
+        SizeController.Instance.ChangeScale((int)sizeInCm);
+    }
+
     private void ActivateFlow(int i)
     {
         FlowController.Instance.SetFlowActive(i);
