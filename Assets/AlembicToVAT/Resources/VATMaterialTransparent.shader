@@ -19,7 +19,6 @@ Shader "VATMaterialTransparent"
 		ZWrite Off
 		Cull Back
 		CGPROGRAM
-		#pragma target 3.0
 		#pragma surface surf Standard addshadow fullforwardshadows vertex:vertexDataFunc alpha
 		struct Input
 		{
