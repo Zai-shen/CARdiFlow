@@ -3,17 +3,14 @@ using System.Reflection;
 using UnityEngine.SceneManagement;
 using System;
 
+// https://forum.unity.com/threads/use-ar-camera-vuforia-core-in-individual-scene-not-entire-project.498489/
 public class VuforiaFix : MonoBehaviour
 {
     private void Awake()
     {
         Debug.Log("COMMAND: Fixing vuforia.");
-        // https://forum.unity.com/threads/use-ar-camera-vuforia-core-in-individual-scene-not-entire-project.498489/
         try
         {
-            EventInfo evSceneLoaded = typeof(SceneManager).GetEvent("sceneLoaded");
-            Type tDelegate = evSceneLoaded.EventHandlerType;
-
             MethodInfo attachHandler = typeof(Vuforia.VuforiaRuntime).GetMethod("AttachVuforiaToMainCamera", BindingFlags.NonPublic | BindingFlags.Instance);
 
             Delegate d = Delegate.CreateDelegate(typeof(UnityEngine.Events.UnityAction<Scene, LoadSceneMode>), Vuforia.VuforiaRuntime.Instance, attachHandler);
@@ -21,7 +18,7 @@ public class VuforiaFix : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("Cant remove the AttachVuforiaToMainCamera action. Exception " + e.Message);
+            Debug.LogError("Cant remove the AttachVuforiaToMainCamera action. Exception: " + e.Message);
         }
 
         Destroy(this);
